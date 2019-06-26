@@ -5,11 +5,8 @@ class ChatMessagesController < ApplicationController
 			content: params[:chat_message][:content], 
 			chat_room: @chat_room )
 		if @chat_message.save
-			redirect_to @chat_room
-		else
-			flash[:alert] = '内容不能为空。'
-			@chat_messages = @chat_room.
-			redirect_to @chat_room
+			new_message = render_to_string(partial: 'chat_messages/chat_message', locals: {chat_message: @chat_message})
+			ActionCable.server.broadcast("ChatRoomChannel:#{params[:chat_room_id]}", new_message: new_message)
 		end
 	end
 end

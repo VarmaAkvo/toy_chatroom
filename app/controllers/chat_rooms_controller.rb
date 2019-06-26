@@ -1,6 +1,6 @@
 class ChatRoomsController < ApplicationController
 	def index
-		@chat_rooms = ChatRoom.all
+		@chat_rooms = ChatRoom.all.includes(:user)
 	end
 
 	def new
@@ -10,7 +10,7 @@ class ChatRoomsController < ApplicationController
 	def show
 		@chat_room = ChatRoom.find(params[:id])
 		@chat_message = current_user.chat_messages.build(chat_room: @chat_room)
-		@chat_messages = @chat_room.chat_messages
+		@chat_messages = @chat_room.chat_messages.includes(:user)
 	end
 
 	def create
@@ -30,7 +30,7 @@ class ChatRoomsController < ApplicationController
 			redirect_to root_path
 		else
 			flash.now[:alert] = '你没有权限进行该操作。'
-			@chat_messages = @chat_room.chat_messages
+			@chat_messages = @chat_room.chat_messages.includes(:user)
 			@chat_message = current_user.chat_messages.build(chat_room: @chat_room)
 			render 'show'
 		end
