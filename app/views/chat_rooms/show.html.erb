@@ -1,4 +1,16 @@
 <h3 class="bg-dark p-2 mb-0 rounded-top text-white"><%= @chat_room.name %></h3>
 <div class="border mb-1 overflow-auto" style="height: 50vh;" id="chat_messages_area">
-  <%#= render @chat_messages %>
+  <%= render @chat_messages %>
+</div>
+<div data-controller="chat-messages">
+  <%= form_with model: [@chat_room, @chat_message], data: {target: 'chat-messages.form', action: 'ajax:before->chat-messages#check_blank'} do |f| %>
+    <div class="form-group">
+    	<%= f.label :content %>
+      <%= f.text_area :content, rows:3, data: {action: 'keyup->chat-messages#send_message'}, class: 'form-control' %>
+    </div>
+
+    <div class="form-group d-flex justify-content-end">
+      <%= f.submit '发送', class: 'btn btn-primary px-4 py-0', id: 'chat_message_submit', data: {target: 'chat-messages.submit', disable_with: false}%>
+    </div>
+  <% end %>
 </div>
