@@ -1,6 +1,14 @@
 class ChatRoomsController < ApplicationController
 	def index
 		@chat_rooms = ChatRoom.all.includes(:user)
+		@user_counts = ChatRoomUser.where(chat_room: @chat_rooms).group(:chat_room_id).count
+		respond_to do |format|
+			format.html { render 'index' }
+			format.js do
+				@content = render_to_string('index.html.erb')
+				render 'index'
+			end
+		end
 	end
 
 	def new
@@ -9,6 +17,8 @@ class ChatRoomsController < ApplicationController
 
 	def show
 		@chat_room = ChatRoom.find(params[:id])
+		# 如果当前用户还未加入该房间则加入
+		current_user.chat_room_users.find_or_create_by(chat_room: @chat_room)
 		@chat_message = current_user.chat_messages.build(chat_room: @chat_room)
 		@chat_messages = @chat_room.chat_messages.includes(:user)
 	end

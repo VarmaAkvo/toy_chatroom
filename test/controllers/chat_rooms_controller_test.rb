@@ -9,6 +9,9 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   test 'shoule get index' do
   	get root_path
   	assert_response :success
+
+    get root_path, xhr: true
+    assert_response :success
   end
 
   test 'should get new' do
@@ -19,6 +22,10 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   test 'should get show' do
   	get chat_room_path(@chat_room)
   	assert_response :success
+    # 加入新房间
+    assert_difference('ChatRoomUser.count') do
+      get chat_room_path(chat_rooms(:two))
+    end
   end
 
   test 'should create a chat_room' do

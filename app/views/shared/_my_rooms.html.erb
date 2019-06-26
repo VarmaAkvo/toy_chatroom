@@ -1,0 +1,17 @@
+<div class="">
+  <%= link_to '首页', root_path, class: 'btn btn-dark btn-block mb-2', remote: true %>
+  <div class="">
+    <h4 class="p-2 rounded-top bg-dark text-white mb-0">我的聊天室</h4>
+    <div class="border">
+      <% if @my_rooms.present? %>
+        <ul class="list-group">
+          <% @my_rooms.each do |room| %>
+            <%= sidebar_link(room) %>
+          <% end %>
+        </ul>
+      <% else %>
+        <em class='p-2'>当前没有加入的聊天室。</em>
+      <% end %>
+    </div>
+  </div>
+</div>

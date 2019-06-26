@@ -10,8 +10,17 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <%= render 'shared/header' %>
+    <%= render 'shared/flash_message' %>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-3">
+          <%= render 'shared/my_rooms' %>
+        </div>
+        <div class="col-9" id="main">
+          <%= yield %>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
