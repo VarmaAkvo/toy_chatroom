@@ -4,10 +4,6 @@ class ChatRoomsController < ApplicationController
 		@user_counts = ChatRoomUser.where(chat_room: @chat_rooms).group(:chat_room_id).count
 		respond_to do |format|
 			format.html { render 'index' }
-			format.js do
-				@content = render_to_string('index.html.erb')
-				render 'index'
-			end
 		end
 	end
 
@@ -21,6 +17,9 @@ class ChatRoomsController < ApplicationController
 		current_user.chat_room_users.find_or_create_by(chat_room: @chat_room)
 		@chat_message = current_user.chat_messages.build(chat_room: @chat_room)
 		@chat_messages = @chat_room.chat_messages.includes(:user)
+		respond_to do |format|
+			format.html { render 'show' }
+		end
 	end
 
 	def create
