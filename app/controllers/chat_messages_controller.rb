@@ -7,6 +7,7 @@ class ChatMessagesController < ApplicationController
 		if @chat_message.save
 			new_message = render_to_string(partial: 'chat_messages/chat_message', locals: {chat_message: @chat_message})
 			ActionCable.server.broadcast("ChatRoomChannel:#{params[:chat_room_id]}", new_message: new_message)
+			ActionCable.server.broadcast("NewMessagesChannel:#{params[:chat_room_id]}", new_message: true)
 		end
 	end
 end

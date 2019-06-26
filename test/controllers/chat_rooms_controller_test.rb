@@ -9,9 +9,6 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   test 'shoule get index' do
   	get root_path
   	assert_response :success
-
-    get root_path, xhr: true
-    assert_response :success
   end
 
   test 'should get new' do

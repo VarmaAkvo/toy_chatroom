@@ -14,3 +14,12 @@
  *= require_self
  */
 @import "bootstrap/scss/bootstrap";
+
+/* 通知新信息 */
+@keyframes new_messages {
+  from { background-color: #f8f9fa;}
+  to { background-color: #FFA500;}
+}
+.new_messages {
+  animation: new_messages 1s infinite;
+}
