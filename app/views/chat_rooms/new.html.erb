@@ -1,0 +1,11 @@
+<h3 class="bg-dark p-2 mb-0 text-white rounded-top">新聊天室</h3>
+<%= form_with model: @chat_room, class: 'p-2 border' do |f| %>
+  <div class="form-group">
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit '创建', class: 'btn btn-primary btn-block'%>
+  </div>
+<% end %>

@@ -1,0 +1,12 @@
+<%= link_to chat_room_path(chat_room), class: 'list-group-item list-group-item-action ' do %>
+  <div class="d-flex justify-content-between">
+    <div class="d-flex flex-column">
+      <div>房间名：<em><%= chat_room.name %></em></div>
+      <div>创建者：<em><%= chat_room.user.email %></em></div>
+    </div>
+    <div class="d-flex flex-column">
+      <div>人数：<em><%#= chat_room.user_count %></em></div>
+      <div>最后回复时间：<small><%= chat_room.updated_at.strftime("%Y-%m-%d %H:%M:%S") %></small></div>
+    </div>
+  </div>
+<% end %>

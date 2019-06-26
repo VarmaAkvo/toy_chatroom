@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between p-2 rounded-top bg-dark">
+  <h3 class="text-white mb-0">聊天室</h3>
+  <%= link_to '+', new_chat_room_path, class: 'btn btn-primary' %>
+</div>
+
+<% if @chat_rooms.present? %>
+  <ul class="list-group">
+    <%= render @chat_rooms %>
+  </ul>
+<% else %>
+	<div class="border p-2">
+	  当前没有可用的聊天室，你可以自行<%= link_to '创建', new_chat_room_path %>一个。
+	</div>
+<% end %>
