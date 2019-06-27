@@ -47,4 +47,10 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   		delete chat_room_path(other_room)
   	end 	
   end
+
+  test 'should leave a chat_room' do
+    assert_difference('ChatRoomUser.count', -1) do
+      delete leave_chat_room_path(@chat_room)
+    end
+  end
 end

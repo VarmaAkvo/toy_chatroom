@@ -44,4 +44,10 @@ class ChatRoomsController < ApplicationController
 			render 'show'
 		end
 	end
+
+	def leave
+		@chat_room = ChatRoom.find(params[:id])
+		current_user.chat_room_users.find_by(chat_room: @chat_room).destroy
+		redirect_to root_path
+	end
 end

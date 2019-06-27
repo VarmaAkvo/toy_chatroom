@@ -1,4 +1,12 @@
-<h3 class="bg-dark p-2 mb-0 rounded-top text-white"><%= @chat_room.name %></h3>
+<div class="d-flex justify-content-between p-2 rounded-top bg-dark">
+  <h3 class="text-white text-truncate mb-0"><%= @chat_room.name %></h3>
+  <% if @chat_room.user == current_user %>
+    <%= link_to 'x', chat_room_path(@chat_room), method: :delete, class: 'btn btn-danger',
+          data: {confirm: '你确定要强制关闭该房间吗？'} %>
+  <% else %>
+    <%= link_to 'x', leave_chat_room_path(@chat_room), method: :delete, class: 'btn btn-danger' %>
+  <% end %>
+</div>
 <div data-controller="chat-room" data-chat-room-id=<%= @chat_room.id %> >
   <div class="border mb-1 overflow-auto" style="height: 50vh;" data-target="chat-room.messages">
     <%= render @chat_messages %>
