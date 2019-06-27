@@ -20,8 +20,18 @@ export default class extends Controller {
 
 			  received(data) {
 			  	thisControler.linkTarget.classList.add('new_messages')
-			  }
-			});  		
+			  },
+
+        stop() {
+          this.perform('stop')
+        }
+			});
   	}
+  }
+
+  disconnect() {
+    if (this.channel) {
+      this.channel.stop()
+    }
   }
 }

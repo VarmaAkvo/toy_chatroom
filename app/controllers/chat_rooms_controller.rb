@@ -12,7 +12,11 @@ class ChatRoomsController < ApplicationController
 	end
 
 	def show
-		@chat_room = ChatRoom.find(params[:id])
+		@chat_room = ChatRoom.find_by(id: params[:id])
+		if @chat_room.nil?
+			flash[:alert] = '该房间不存在或已关闭。'
+			redirect_to root_path and return
+		end
 		# 如果当前用户还未加入该房间则加入
 		current_user.chat_room_users.find_or_create_by(chat_room: @chat_room)
 		@chat_message = current_user.chat_messages.build(chat_room: @chat_room)

@@ -6,4 +6,8 @@ class DestroyChatRoomChannel < ApplicationCable::Channel
   def unsubscribed
   	stop_all_streams
   end
+
+  def stop
+    stop_all_streams
+  end
 end

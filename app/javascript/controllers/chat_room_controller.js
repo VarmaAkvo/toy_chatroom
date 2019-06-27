@@ -14,7 +14,11 @@ export default class extends Controller {
 	      thisControler.textareaTarget.value = ""
 	      // 拉到聊天区底部
 	      thisControler.messagesTarget.scrollTop = thisControler.messagesTarget.scrollHeight
-		  }
+		  },
+
+      stop() {
+        this.perform('stop')
+      }
 		});
 		// 非房主才订阅该channel
 		if (this.data.get('owner') == "false") {
@@ -22,10 +26,23 @@ export default class extends Controller {
 				received(data) {
 					alert("房主已强制关闭该房间。")
 					window.location.assign(data["url"])
-				}
-			});			
+				},
+
+        stop() {
+          this.perform('stop')
+        }
+			});
 		}
 		// 拉到聊天区底部
 	  this.messagesTarget.scrollTop = thisControler.messagesTarget.scrollHeight
+  }
+
+  disconnect() {
+    if (this.chatRoomChannel) {
+      this.chatRoomChannel.stop()
+    }
+    if (this.destroyChatRoomChannel) {
+      this.destroyChatRoomChannel.stop()
+    }
   }
 }
