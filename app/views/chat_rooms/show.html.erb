@@ -7,7 +7,7 @@
     <%= link_to 'x', leave_chat_room_path(@chat_room), method: :delete, class: 'btn btn-danger' %>
   <% end %>
 </div>
-<div data-controller="chat-room" data-chat-room-id=<%= @chat_room.id %> >
+<div data-controller="chat-room" data-chat-room-id=<%= @chat_room.id %> data-chat-room-owner=<%= @chat_room.user_id == current_user.id %> >
   <div class="border mb-1 overflow-auto" style="height: 50vh;" data-target="chat-room.messages">
     <%= render @chat_messages %>
   </div>

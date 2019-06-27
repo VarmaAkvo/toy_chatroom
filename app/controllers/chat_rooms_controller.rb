@@ -39,6 +39,8 @@ class ChatRoomsController < ApplicationController
 		@chat_room = ChatRoom.find(params[:id])
 		if @chat_room.user == current_user
 			@chat_room.destroy
+			# 强制其他在该房间的用户离开并重定向到首页
+			ActionCable.server.broadcast("DestroyChatRoomChannel:#{@chat_room.id}", url: root_url)
 			redirect_to root_path
 		else
 			flash.now[:alert] = '你没有权限进行该操作。'

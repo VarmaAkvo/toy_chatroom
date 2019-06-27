@@ -6,15 +6,7 @@ export default class extends Controller {
 
   connect() {
   	let thisControler = this;
-  	this.channel = createConsumer().subscriptions.create({ channel: "ChatRoomChannel", chat_room_id: this.data.get('id')}, {
-		  connected() {
-		    // Called when the subscription is ready for use on the server
-		  },
-
-		  disconnected() {
-		    // Called when the subscription has been terminated by the server
-		  },
-
+  	this.chatRoomChannel = createConsumer().subscriptions.create({ channel: "ChatRoomChannel", chat_room_id: this.data.get('id')}, {
 		  received(data) {
 		  	// 插入信息
 		  	thisControler.messagesTarget.insertAdjacentHTML('beforeend', data["new_message"])
@@ -24,6 +16,15 @@ export default class extends Controller {
 	      thisControler.messagesTarget.scrollTop = thisControler.messagesTarget.scrollHeight
 		  }
 		});
+		// 非房主才订阅该channel
+		if (this.data.get('owner') == "false") {
+			this.destroyChatRoomChannel = createConsumer().subscriptions.create({ channel: "DestroyChatRoomChannel", chat_room_id: this.data.get('id')}, {
+				received(data) {
+					alert("房主已强制关闭该房间。")
+					window.location.assign(data["url"])
+				}
+			});			
+		}
 		// 拉到聊天区底部
 	  this.messagesTarget.scrollTop = thisControler.messagesTarget.scrollHeight
   }
