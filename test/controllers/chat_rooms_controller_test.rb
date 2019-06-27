@@ -26,13 +26,14 @@ class ChatRoomsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create a chat_room' do
-  	assert_difference('ChatRoom.count') do
+  	assert_difference(['ChatRoom.count', 'ChatRoomUser.count']) do
   	 	post chat_rooms_path, params: {chat_room: {
   		  name: 'new room'
   	  }}
   	end
 
   	assert_equal @user, ChatRoom.last.user
+    assert_redirected_to ChatRoom.last
   end
 
   test 'should destroy a chat_room' do

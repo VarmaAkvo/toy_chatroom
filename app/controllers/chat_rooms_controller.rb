@@ -25,7 +25,10 @@ class ChatRoomsController < ApplicationController
 	def create
 		@chat_room = current_user.chat_rooms.build(name: params[:chat_room][:name])
 		if @chat_room.save
-			redirect_to root_path
+			current_user.chat_room_users.create(chat_room: @chat_room)
+			@chat_message = current_user.chat_messages.build(chat_room: @chat_room)
+			@chat_messages = @chat_room.chat_messages.includes(:user)
+			redirect_to @chat_room
 		else
 			flash.now[:alert] = '房间创建失败。'
 			render 'new'
